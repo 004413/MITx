@@ -1,7 +1,8 @@
 var calculator=(function(){
   function calculate(text){
-    var pattern=/\d+|\+|\-|\*|\/|\(|\)/g;
+    var pattern=/\d+\.?\d*|\+|\-|\*|\/|\(|\)/g;
     var tokens=text.match(pattern);
+    console.log(tokens);
     try{
       val=evaluation(tokens);
       if(tokens.length>0) throw "ill-formed expression";
