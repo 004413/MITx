@@ -48,7 +48,7 @@ function evaluation(tokens){
   var value=read_operand(tokens);
   while(tokens.length>0){
     var operator=tokens.shift();
-    if(["+","-","*","/"].indexOf(operator)<0) throw "unrecognized operator";
+    if(["+","-","*","/","(",")"].indexOf(operator)<0) throw "unrecognized operator";
     if(tokens.length==0) throw "missing operand";
     var next=read_operand(tokens);
     if(operator=="+"){
@@ -57,7 +57,7 @@ function evaluation(tokens){
       value-=next;
     }else if(operator=="*"){
       value*=next;
-    }else{
+    }else if(operator=="/"){
       value/=next;
     }
   }
