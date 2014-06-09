@@ -1,5 +1,3 @@
-<script>
-  function calculate(){
-    console.log('click');
-  }
-</script>
+function calculate(){
+  console.log('click');
+}}
