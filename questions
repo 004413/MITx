@@ -1,0 +1,17 @@
+DOM: document object model
+
+scripts for buttons three ways: in line after 'onclick', script elsewhere, script from file with src
+
+day1.js not showing (calculate not defined)
+
+By not writing http or https in URL, correct security inherited. 
+
+$ give jquery
+
+Use http:// instead of default file:// for importing scripts. 
+
+        <p>
+            <input type="text" size="50" id="text"/>
+            <button onclick="calculator.calculate()">Calculate</button>
+            <div id="text_out"></div>
+        </p>

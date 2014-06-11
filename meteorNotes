@@ -1,0 +1,63 @@
+[]: array (list)
+{}: object (dictionary)
+
+1 file (.html): 'do my bidding' application: computes something
+
+meteor: chat client
+e-mail is a really slow chat client
+twitter is basically a chat client
+facebook is twitter for those that have mutually approved each other
+amazon is basically a conversation with a seller
+
+could be sharing data between any number of people, not just 2
+
+Sharing of Data
+
+Databases
+A series of tables
+Each table has an id column
+The database determines a unique identifier. 
+For example, movie table (id, title, director), user table (id, name, e-mail), favorite movies table (id, userid, movieid)
+ids are pointers (used instead of, say, favorite movies column on users)
+
+What is the ID of Star Wars?
+
+Movies.find({title: "Star Wars"}).fetch() // find returns a pointer, fetch brings back info (.count() could be used to find total)
+Movies.findOne({title: "Star Wars"}) //returns actual object
+
+How many movies has G. Lucas directed? 
+
+Movies.find({director: "George Lucas"}).count()
+
+How many users are there? 
+
+Users.find({}).count()
+How many favorites does user 10 have? 
+
+Favorites.find(user.id: "10").count() // .fetch() would get back entire rows in Favorites table of each movie id
+
+Client-Server Architecture
+
+Start: Sending Data
+Click Send
+Favorites.insert({user_id:10,name_id:0}) // Remember, IDs are assigned by the database
+
+Middle: Storing Data
+Database Session Variable
+
+End: Retrieving Data
+how the number of active users
+Shows other users' chats
+
+Reactivity
+
+Chat: query in database
+Posts.find({}).fetch()
+
+var latestLoad=[time]
+Tweets.find({timestamp<latestLoad}).fetch() // Meteor auto-updates
+Tweets.find({timestamp>=latestLoad{).count() // Number shown at top
+
+Upon clicking bar, latestLoad updated
+
+{userid in Friends} extra condition in Facebook
