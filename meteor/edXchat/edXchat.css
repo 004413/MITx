@@ -1,0 +1,26 @@
+/* CSS declarations go here */
+#chatContainer{
+  width: 300px;
+  border: 1px solid black;
+}
+
+#chatTitle{
+  background-color: lightblue;
+  padding: 5px;
+  border-bottom: 1px solid black;
+}
+
+#chatHistory{
+  height: 200px;
+  overflow-y: auto;
+  margin: 5px;
+}
+
+#sendChat{
+  width: 50px;
+  height: 30px;
+}
+
+#userChatTextarea{
+  width: 220px;
+}

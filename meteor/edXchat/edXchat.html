@@ -1,0 +1,28 @@
+<head>
+  <title>edX Chat</title>
+</head>
+
+<body>
+    {{> loginButtons}}<br><br>
+    {{#if currentUser}}
+      {{> chatClient}}
+    {{/if}}
+</body>
+
+<template name="chatClient">
+  <div id='chatContainer'>
+    <div id='chatTitle'>
+      edX Chat
+    </div>
+    <div id='chatHistory'>
+      {{#each lines}}
+        <b>{{this.username}}</b>: {{this.chatContent}}<br>
+      {{/each}}
+    </div>
+    
+    <textarea id="userChatTextarea"></textarea>
+    <button id='sendChat'>
+      Send
+    </button>
+  </div>
+</template>
