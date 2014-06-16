@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>6.MITx d3 demo</title>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+
+<script>
+
+var students=['Braswell, Leigh Marie','Chang, Sen','Gubba, Virup','Pan, Crystal','Rivera, Steven Anthony','Sedlar, Katie','Soto, Roberto','Tao, Pei','Tsogsuren, Iveel','Wu, Ray Hua']
+
+$(function(){
+/*
+  for(var i=0;i<students.length;i++){
+    var s=students[i];
+    var len=s.length;
+    console.log(s,len);
+    $('#studentRoster').append('<div style="font-size: '+len*2+'px;">'+s+'</div>');
+  }
+});
+*/
+
+  var root=d3.select("#studentRoster");
+  var binding=root.selectAll("div").data(students);
+  binding.enter()
+         .append('div')
+         .text(function(d){
+            var parts=d.split(', ');
+            return parts[1]+" "+parts[0];
+         })
+         .style('font-size',function(d){
+           return 2*d.length+'px';
+         });
+});
+
+</script>
+</head>
+
+<body>
+<h1>6.MITx Summer 2014</h1>
+
+<div id="studentRoster">
+</div>
+
+</body>
+</html>

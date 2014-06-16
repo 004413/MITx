@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>6.MITx d3 activity - MIT dorm pressure survey</title>
+
+<style>
+
+#hugeTitle{
+  color: red;
+  font: 50px lucida;
+}
+
+.chart text {
+  fill: black;
+  font: 10px sans-serif;
+}
+
+.happier {
+  fill: #EE8888; //red for first bar
+}
+
+.extrovert {
+  fill: #88EE88; //green for second bar
+}
+
+.balance {
+  fill: #8888EE; //blue for third bar
+}
+// darker colors for graduate dorms (not yet implemented)
+.ghappier {
+  fill: #774444;
+}
+
+.gextrovert {
+  fill: #447744;
+}
+
+.gbalance {
+  fill: #444477;
+}
+
+/*.chart rect {
+  fill: blue; 
+}*/
+</style>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+
+<script>
+
+// http://tech.mit.edu/V132/N59/pressure/breakdown/residence/index.htm
+//
+// Percentage of YES answers for each dorm
+// - happierThanAvg: "I am happier than the average MIT student."
+// - extroverted: "Are you extroverted?"
+// - workLifeBalance: "I strike a good balance between my personal life and work."
+var mitPressureSurvey = [
+{dorm: 'Simmons Hall', happierThanAvg: 41, extroverted: 22, workLifeBalance: 49, type: 'ug'},
+{dorm: 'Next House', happierThanAvg: 35, extroverted: 18, workLifeBalance: 45, type: 'ug'},
+{dorm: 'New House', happierThanAvg: 41, extroverted: 24, workLifeBalance: 48, type: 'ug'},
+{dorm: 'MacGregor House', happierThanAvg: 42, extroverted: 25, workLifeBalance: 49, type: 'ug'},
+{dorm: 'Burton Connor', happierThanAvg: 50, extroverted: 39, workLifeBalance: 43, type: 'ug'},
+{dorm: 'Baker House', happierThanAvg: 49, extroverted: 44, workLifeBalance: 54, type: 'ug'},
+{dorm: 'McCormick Hall', happierThanAvg: 46, extroverted: 32, workLifeBalance: 47, type: 'ug'},
+{dorm: 'Maseeh Hall', happierThanAvg: 45, extroverted: 38, workLifeBalance: 43, type: 'ug'},
+{dorm: 'Bexley Hall', happierThanAvg: 36, extroverted: 41, workLifeBalance: 38, type: 'ug'},
+{dorm: 'Random Hall', happierThanAvg: 47, extroverted: 29, workLifeBalance: 37, type: 'ug'},
+{dorm: 'East Campus', happierThanAvg: 46, extroverted: 31, workLifeBalance: 46, type: 'ug'},
+{dorm: 'Senior House', happierThanAvg: 38, extroverted: 29, workLifeBalance: 38, type: 'ug'},
+{dorm: 'Fraternities', happierThanAvg: 54, extroverted: 40, workLifeBalance: 54, type: 'ug'},
+{dorm: 'Sororities', happierThanAvg: 56, extroverted: 52, workLifeBalance: 45, type: 'ug'},
+{dorm: 'ILGs', happierThanAvg: 63, extroverted: 22, workLifeBalance: 33, type: 'ug'},
+{dorm: 'Off Campus', happierThanAvg: 46, extroverted: 37, workLifeBalance: 41, type: 'g'},
+{dorm: 'Westgate', happierThanAvg: 43, extroverted: 30, workLifeBalance: 43, type: 'g'},
+{dorm: 'Eastgate', happierThanAvg: 56, extroverted: 30, workLifeBalance: 51, type: 'g'},
+{dorm: 'Tang Hall', happierThanAvg: 34, extroverted: 26, workLifeBalance: 33, type: 'g'},
+{dorm: 'The Warehouse', happierThanAvg: 50, extroverted: 47, workLifeBalance: 41, type: 'g'},
+{dorm: 'Ashdown House', happierThanAvg: 37, extroverted: 25, workLifeBalance: 34, type: 'g'},
+{dorm: 'Sidney-Pacific', happierThanAvg: 42, extroverted: 31, workLifeBalance: 33, type: 'g'},
+{dorm: 'Edgerton House', happierThanAvg: 40, extroverted: 21, workLifeBalance: 47, type: 'g'},
+]
+
+var width = 460;
+var barHeight = 20;
+
+// utility function that maps [0 to 100] to [0, width]
+// draw this on the board as a map of two lines
+var scaleFunction = d3.scale.linear().domain([0, 100]).range([0, width]);
+
+// jQuery magic to run this code after your page loads
+$(function() {
+  var chart=d3.select("#d3chart")
+              .attr("width",width)
+              .attr("height",barHeight*mitPressureSurvey.length*3); //fit all bars
+  // binding
+  var binding=chart.selectAll("g").data(mitPressureSurvey);
+  var bar=binding.enter()
+         .append("g")
+         .attr("transform",function(d,i){
+           return "translate(0, "+(i*barHeight*3)+")"; //translation for each input
+         });
+// Make first bar larger than other bars
+  bar.append("rect")
+     .attr("width",function(d){return scaleFunction(d.happierThanAvg);})
+     .attr("height",barHeight-1)
+     .attr("class","happier");
+
+  bar.append("rect")
+     .attr("y",barHeight)
+     .attr("width",function(d){return scaleFunction(d.extroverted);})
+     .attr("height",barHeight-6)
+     .attr("class","extrovert");
+
+  bar.append("rect")
+     .attr("y",2*barHeight-5)
+     .attr("width",function(d){return scaleFunction(d.workLifeBalance);})
+     .attr("height",barHeight-6)
+     .attr("class","balance");
+
+  bar.append("text")
+     .attr("x",3)
+     .attr("y",barHeight/2+3)
+     .text(function(d){return (d.dorm+": Happier Than Average");});
+
+  bar.append("text")
+     .attr("x",3)
+     .attr("y",3*barHeight/2+2)
+     .text(function(d){return (d.dorm+": Extroverted");});
+
+  bar.append("text")
+     .attr("x",3)
+     .attr("y",5*barHeight/2-3)
+     .text(function(d){return (d.dorm+": Work-Life Balance");});
+});
+
+</script>
+</head>
+
+<body>
+
+<h1 id="hugeTitle">MIT pressure survey visualization</h1>
+
+<svg class="chart" id="d3chart"></svg>
+
+</body>
+</html>
